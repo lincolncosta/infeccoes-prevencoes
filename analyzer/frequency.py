@@ -1,4 +1,5 @@
 import random
+import matplotlib.pyplot as plt
 
 # sempre escolhendo as bifurcações mais curtas 
 infections_path1 = [1, 3, 5, 12, 26, 36, 41, 43, 45, 50, 55, 67, 76, 88, 93, 98, 105, 111]
@@ -36,7 +37,18 @@ def frequency_counter(board_length):
 				no_winner = False
 			else :
 				board[position] += 1
-	print(board)
+
+	fig = plt.figure()
+	ax = fig.add_axes([0, 0, 1, 1])
+	x = [i for i in range(board_length)]
+	ax.bar(x, board)
+	
+	ax.set_xlabel("Position")
+	ax.set_ylabel("Frequency")
+	ax.set_title("Frequency by board position")
+
+	plt.show()
+
 	return board
 
 
@@ -49,14 +61,27 @@ def frequency_counter_with_effects(board_length, infections, preventions):
 		while no_winner:
 			position += roll_dice()
 			if position in infections:
-				poistion = position if random.random() < 0.5 else position - roll_dice() 
+				board[position] += 1
+				position = position if random.random() < 0.5 else position - roll_dice() 
 			if position in preventions:
+				board[position] += 1
 				position = position if random.random() < 0.5 else position + roll_dice()
 			if position >= board_length:
 				no_winner = False
-			else :
+			else:
 				board[position] += 1
-	print(board)
+	
+	fig = plt.figure()
+	ax = fig.add_axes([0, 0, 1, 1])
+	x = [i for i in range(board_length)]
+	ax.bar(x, board)
+	
+	ax.set_xlabel("Position")
+	ax.set_ylabel("Frequency")
+	ax.set_title("Frequency by board position")
+
+	plt.show()
+
 	return board
 
 frequency_counter(board_length_path1)
