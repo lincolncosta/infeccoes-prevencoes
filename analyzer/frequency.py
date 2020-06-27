@@ -37,18 +37,7 @@ def frequency_counter(board_length):
 				no_winner = False
 			else :
 				board[position] += 1
-
-	fig = plt.figure()
-	ax = fig.add_axes([0, 0, 1, 1])
-	x = [i for i in range(board_length)]
-	ax.bar(x, board)
-	
-	ax.set_xlabel("Position")
-	ax.set_ylabel("Frequency")
-	ax.set_title("Frequency by board position")
-
-	plt.show()
-
+	plot(board)
 	return board
 
 
@@ -70,19 +59,37 @@ def frequency_counter_with_effects(board_length, infections, preventions):
 				no_winner = False
 			else:
 				board[position] += 1
-	
-	fig = plt.figure()
-	ax = fig.add_axes([0, 0, 1, 1])
-	x = [i for i in range(board_length)]
-	ax.bar(x, board)
-	
-	ax.set_xlabel("Position")
-	ax.set_ylabel("Frequency")
+	plot(board)
+	return board
+
+
+def plot(boardFrequencies):
+
+	import numpy as np
+	objects = [str(i) for i in range(len(boardFrequencies))]
+
+	fig, ax = plt.subplots(figsize=(20,20))
+
+	ax.set_xlabel("Position", fontsize=12)
+	ax.set_ylabel("Frequency", fontsize=12)
+	plt.xlabel = ('Minimum Hamming Distance')
 	ax.set_title("Frequency by board position")
+
+	# The first parameter would be the x value, 
+	# by editing the delta between the x-values 
+	# you change the space between bars
+	plt.bar([i for i in range(len(boardFrequencies))], boardFrequencies)
+
+	# The first parameter is the same as above, 
+	# but the second parameter are the actual 
+	# texts you wanna display
+	plt.xticks([i for i in range(len(boardFrequencies))], objects)
+
+	for tick in ax.get_xticklabels():
+		tick.set_rotation(90)
 
 	plt.show()
 
-	return board
 
 frequency_counter(board_length_path1)
 frequency_counter(board_length_path2)
